@@ -1,7 +1,9 @@
 ---
-- name: Reference a collection content using its FQCN
+- name: Run a play using the collections keyword
   hosts: all
+  collections:
+    - kubevirt.core.kubevirt_vmi_info
   tasks:
-    - name: Call a module using FQCN
-      kubevirt.core.kubevirt_vmi_info:
-        namespace: default
+    name: Get a list of all VirtualMachinesInstances
+      namespace: default
+    register: vmi_list
