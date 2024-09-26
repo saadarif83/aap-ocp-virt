@@ -1,0 +1,7 @@
+---
+- name: Reference a collection content using its FQCN
+  hosts: all
+  tasks:
+    - name: Call a module using FQCN
+      kubevirt.core.kubevirt_vmi_info:
+        namespace: default
