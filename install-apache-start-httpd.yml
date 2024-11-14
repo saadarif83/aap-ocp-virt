@@ -3,16 +3,24 @@
   hosts: all 
   become: yes
   tasks:
-  - name: latest Apache version installed
-    yum:
-      name: httpd
-      state: latest
-  - name: Apache enabled and running
-    service:
-      name: httpd
-      enabled: true
-      state: started
-  - name: copy web.html
-    copy:
-      src: web.html
-      dest: /var/www/html/index.html
+  - name: Update all packages
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: yes
+        
+  - name: Install Apache
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+  - name: Start and enable Apache service
+      ansible.builtin.systemd:
+        name: httpd
+        state: started
+        enabled: yes
+        
+  - name: Create a basic index.html
+      ansible.builtin.copy:
+        content: "Apache is running on RHEL 8"
+        dest: /var/www/html/index.html
+        mode: '0644'
