@@ -3,23 +3,23 @@
   hosts: all 
   become: yes
   tasks:
-  - name: Update all packages
+    - name: Update all packages
       ansible.builtin.dnf:
         name: '*'
         state: latest
         update_cache: yes
         
-  - name: Install Apache
+    - name: Install Apache
       ansible.builtin.dnf:
         name: httpd
         state: present
-  - name: Start and enable Apache service
+    - name: Start and enable Apache service
       ansible.builtin.systemd:
         name: httpd
         state: started
         enabled: yes
         
-  - name: Create a basic index.html
+    - name: Create a basic index.html
       ansible.builtin.copy:
         content: "Apache is running on RHEL 8"
         dest: /var/www/html/index.html
