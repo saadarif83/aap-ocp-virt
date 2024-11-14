@@ -1,0 +1,22 @@
+---
+- name: Update all packages on RHEL servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Update all packages
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+      register: yum_update_result
+    - name: Display update results
+      ansible.builtin.debug:
+        var: yum_update_result
+    - name: Check if reboot is required
+      ansible.builtin.command: needs-restarting -r
+      register: reboot_required
+      changed_when: false
+      failed_when: false
+    - name: Reboot the server if required
+      ansible.builtin.reboot:
+      when: reboot_required.rc == 1
