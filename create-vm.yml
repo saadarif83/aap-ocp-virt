@@ -2,7 +2,7 @@
   kubevirt.core.kubevirt_vm:
     state: present
     name: testvm
-    namespace: default
+    namespace: vms
     labels:
       app: test
     instancetype:
