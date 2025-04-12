@@ -5,5 +5,5 @@
     - kubevirt.core.kubevirt_vmi_info
   tasks:
     name: Get a list of all VirtualMachinesInstances
-      namespace: default
+      namespace: vms
     register: vmi_list
